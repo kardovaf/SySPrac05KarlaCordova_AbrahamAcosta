@@ -1,0 +1,1005 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Pr&aacute;ctica 5: Series de Fourier</title><meta name="generator" content="MATLAB 9.3"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2019-05-14"><meta name="DC.source" content="SySPrac05KarlaCordova_CristianAcosta.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Pr&aacute;ctica 5: Series de Fourier</h1><!--introduction--><p><b>Autor:</b></p><p><b>Acosta Villa Cristian Abraham</b></p><p><b>C&oacute;rdova Fern&aacute;ndez Karla Lilia</b></p><p><b>SE&Ntilde;ALES Y SISTEMAS, Grupo 2TV1</b></p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Objetivos de la pr&aacute;ctica.</a></li><li><a href="#2">Introducci&oacute;n.</a></li><li><a href="#3">Funciones utilizadas en la pr&aacute;ctica.</a></li><li><a href="#4">Ejemplo 6.1</a></li><li><a href="#16">Ejemplo 6.2</a></li><li><a href="#25">Ejemplo 6.4</a></li><li><a href="#33">Ejercicio 6.5</a></li><li><a href="#41">Ejemplo 6.7</a></li><li><a href="#43">Computer Example C6.2</a></li><li><a href="#45">Algoritmo de Trapecio</a></li><li><a href="#50">Referencias.</a></li></ul></div><h2 id="1">Objetivos de la pr&aacute;ctica.</h2><div><ul><li>Realizar gr&aacute;ficas de series de Fourier exponenciales y trigonom&eacute;tricas en tiempo continuo.</li><li>Manipulaci&oacute;n de instrucciones en MATLAB. C&aacute;lculo n&uacute;merico de los coeficientes de Fourier.</li></ul></div><h2 id="2">Introducci&oacute;n.</h2><div><ul><li><b>Coeficientes de Fourier exponencial compleja.</b></li></ul></div><p>Las series de Fourier son series de t&eacute;rminos coseno y seno y surgen en la tarea pr&aacute;ctica de representar funciones peri&oacute;dicas generales. Como aplicaci&oacute;n constituyen una herramienta muy importante en la soluci&oacute;n de problemas en los que intervienen ecuaciones diferenciales ordinarias y parciales. Las series de Fourier pueden adoptar una forma diferente de reescribirse sin utilizar senos y cosenos, en su lugar, utilizando la exponencial compleja. La definici&oacute;n de una serie de Fourier exponencial compleja se da como:</p><p><img src="SySPrac05KarlaCordova_CristianAcosta_eq05942583728993228632.png" alt="$$ \sum_{n=-\infty }^{\infty} D_n e^{jn \omega_0 t}$"></p><p>Donde <img src="SySPrac05KarlaCordova_CristianAcosta_eq10922897471658752443.png" alt="$D_n$"> es el coeficiente de Fourier y est&aacute; dado como:</p><p><img src="SySPrac05KarlaCordova_CristianAcosta_eq05830854331749382617.png" alt="$$ D_n = \frac{1}{T_0}$"> <img src="SySPrac05KarlaCordova_CristianAcosta_eq08083801202277678663.png" alt="$$ \int_{T_0} f(t) e^{-jn \omega_0 t} dt$"></p><p>Donde <img src="SySPrac05KarlaCordova_CristianAcosta_eq13366444403129487393.png" alt="$T_0 = \frac{2\pi}{\omega_0}$">(un per&iacute;odo) y <img src="SySPrac05KarlaCordova_CristianAcosta_eq09478123530129115431.png" alt="$f(t)$"> es la se&ntilde;al a representar en forma de serie.</p><div><ul><li><b>APROXIMACI&Oacute;N NUM&Eacute;RICA.</b></li></ul></div><p>Cuando se tiene un intervalo de muestreo <img src="SySPrac05KarlaCordova_CristianAcosta_eq14047577632175690031.png" alt="$T$"> de la se&ntilde;al, <img src="SySPrac05KarlaCordova_CristianAcosta_eq10922897471658752443.png" alt="$D_n$"> puede ser interpretado tambi&eacute;n:</p><p><img src="SySPrac05KarlaCordova_CristianAcosta_eq14990565415324756861.png" alt="$$ D_n = \lim_{T \to 0} \frac{1}{N_0T} \sum_{k=0}^{N_0-1} f(kT) e^{-jn \omega_0 kT}T$"></p><p><img src="SySPrac05KarlaCordova_CristianAcosta_eq01559981472479757808.png" alt="$$ = \lim_{T \to 0} \frac{1}{N_0} \sum_{k=0}^{N_0-1} f(kT) e^{-jn \Omega_0 k}$"></p><p>Donde <img src="SySPrac05KarlaCordova_CristianAcosta_eq11362084822815331502.png" alt="$N_0 = \frac{T_0}{T}$"> (n&uacute;mero de muestras en un per&iacute;odo), <img src="SySPrac05KarlaCordova_CristianAcosta_eq08036237483806863925.png" alt="$\Omega_0 = \omega_0T=\frac{2\pi }{N_0}$"> y <img src="SySPrac05KarlaCordova_CristianAcosta_eq04074092372853383171.png" alt="$f(kT)$"> representa la kT-&eacute;sima muestra de <img src="SySPrac05KarlaCordova_CristianAcosta_eq09478123530129115431.png" alt="$f(t)$">.</p><p>C&oacute;mo T tiende a cero y este caso es imposible en la vida pr&aacute;ctica y en su c&aacute;lculo num&eacute;ricamente en Software, el l&iacute;mite puede omitirse y simplificarse la ecuaci&oacute;n del coeficiente de Fourier como:</p><p><img src="SySPrac05KarlaCordova_CristianAcosta_eq16057087404168513004.png" alt="$$ D_n = \frac{1}{N_0} \sum_{k=0}^{N_0-1} f(kT) e^{-jn \Omega_0 k}$"></p><div><ul><li><b>Teorema fundamental del c&aacute;lculo.</b></li></ul></div><p>La integraci&oacute;n num&eacute;rica definida como <img src="SySPrac05KarlaCordova_CristianAcosta_eq04897470550026142429.png" alt="$$ \int_{a}^{b}f(x) dx$"> es el &aacute;rea determinada por <img src="SySPrac05KarlaCordova_CristianAcosta_eq17663307419741296505.png" alt="$f(x)$"> entre el intervalo que va desde el valor <i>a</i> hasta el valor <i>b</i>. Para resolver la integraci&oacute;n num&eacute;rica utilizando el teorema fundamental del c&aacute;lculo, se tienen algunas condiciones:</p><div><ol><li>f(x) debe ser integrable (toda funci&oacute;n cont&iacute;nua es integrable en un intervalo).</li><li><img src="SySPrac05KarlaCordova_CristianAcosta_eq07309622954795025702.png" alt="$\frac{dF(x)}{dx} = f(x)$">.</li></ol></div><p>Por lo tanto: <img src="SySPrac05KarlaCordova_CristianAcosta_eq08451736835721976035.png" alt="$$ \int_{a}^{b}f(x) dx = F(a) - F(b)$"></p><p>Siendo <img src="SySPrac05KarlaCordova_CristianAcosta_eq12375577266444837934.png" alt="$F(x)$"> la antiderivada. Calcular la antiderivada puede ser dif&iacute;cil o incluso imposible. Uno de los m&eacute;todos posibles aplicables para hallar la antiderivada de una funci&oacute;n es mediante la aproximaci&oacute;n con polinomios, eligi&eacute;ndose el m&aacute;s parecido <img src="SySPrac05KarlaCordova_CristianAcosta_eq00441311847593852498.png" alt="$P(x)$">.</p><p>Para el c&aacute;culo del coeficiente <img src="SySPrac05KarlaCordova_CristianAcosta_eq10922897471658752443.png" alt="$D_n$">, utilizando el teorema fundamental del c&aacute;lculo:</p><p><img src="SySPrac05KarlaCordova_CristianAcosta_eq05830854331749382617.png" alt="$$ D_n = \frac{1}{T_0}$"> <img src="SySPrac05KarlaCordova_CristianAcosta_eq06470052892708250801.png" alt="$$ \int_{T_0} f(t) e^{-jn \omega_0 t} dt = G(T_0)-G(0)$"></p><p>Donde <img src="SySPrac05KarlaCordova_CristianAcosta_eq08275395662492362933.png" alt="$G(t)$"> representa a la antiderivada del producto <img src="SySPrac05KarlaCordova_CristianAcosta_eq17899197383468184648.png" alt="$f(t) e^{-jn \omega_0 t}$"> , una vez comprobado que es integrable.</p><div><ul><li><b>Algoritmo de Trapecio.</b> El algoritmo de Trapecio o regla de Trapecio se trata de un m&eacute;todo para calcular aproximaciones num&eacute;ricas de integrales definidas.</li></ul></div><p>Para el polinomio interpolante de primer grado se obtiene.</p><p>$$ A = \infty_{a}^{b}f(x)dx = $</p><p>donde:</p><p>$$ f_{1} = f(a) + \frac{f(b)-f(a)}{b-a}(x-a)</p><p>El &aacute;rea bajo la recta es una aproximaci&oacute;n de la integral <img src="SySPrac05KarlaCordova_CristianAcosta_eq07927585159090410340.png" alt="$\infty_{a}^{b}f(x)dx$">. Luego se tiene que la regla de trapecio est&aacute; dado por:</p><p><img vspace="5" hspace="5" src="form_trap.png" alt=""> </p><p>El nombre de regla de trapecio se debe a la interpretaci&oacute;n geom&eacute;trica que se hace de la f&oacute;rmula. Cuando el polinomio interpolante de grado uno, la gr&aacute;fica representa una l&iacute;nea recta en el intervalo <img src="SySPrac05KarlaCordova_CristianAcosta_eq13003530951257114622.png" alt="$[a,b]$"> que es el &aacute;rea del trapecio que se forma.</p><p><img vspace="5" hspace="5" src="fig_trap.png" alt=""> </p><h2 id="3">Funciones utilizadas en la pr&aacute;ctica.</h2><p>Funci&oacute;n <i><b>sfc.m</b></i> para la graficaci&oacute;n de la se&ntilde;al, la serie de Fourier (<b>exponencial compleja</b>), el error, la energ&iacute;a del error y los espectros de magnitud y fase.</p><pre class="language-matlab">
+<span class="keyword">function</span> sfc(t0,tf,dn,d0,f,armo,a,b)
+
+w0=2*pi/(tf-t0);
+sf=d0;
+t=a:0.0001:b;
+
+<span class="keyword">for</span> n=1:armo
+    sf=sf+dn(-n)*exp(w0*-n*t*j)+dn(n)*exp(w0*n*t*j);
+<span class="keyword">end</span>
+hFig = figure;
+set(hFig, <span class="string">'Position'</span>, [0 0 700 700])
+subplot(3,2,1)
+plot(t,sf,<span class="string">'LineWidth'</span>,2)
+grid <span class="string">on</span>
+legend(<span class="string">'Serie de Fourier'</span>,<span class="string">'Location'</span>,<span class="string">'Best'</span>)
+xlabel(<span class="string">'t'</span>,<span class="string">'FontWeight'</span>,<span class="string">'bold'</span>,<span class="string">'FontSize'</span>,16)
+
+sf=d0;
+t1=t0:0.0001:tf;
+
+<span class="keyword">for</span> n=1:armo
+    sf=sf+dn(-n)*exp(w0*-n*t1*j)+dn(n)*exp(w0*n*t1*j);
+<span class="keyword">end</span>
+
+subplot(3,2,2)
+plot(t1,f(t1),<span class="string">'r'</span>,<span class="string">'LineWidth'</span>,2)
+grid <span class="string">on</span>
+hold <span class="string">on</span>
+plot(t1,sf,<span class="string">'LineWidth'</span>,2)
+legend(<span class="string">'Funci&oacute;n original'</span>,<span class="string">'Serie de Fourier '</span>,<span class="string">'Location'</span>,<span class="string">'Best'</span>)
+xlabel(<span class="string">'t'</span>,<span class="string">'FontWeight'</span>,<span class="string">'bold'</span>,<span class="string">'FontSize'</span>,16)
+nn=-armo:armo;
+axis <span class="string">auto</span>
+
+subplot(3,2,4)
+e=f(t1)-sf;
+plot(t1,e,<span class="string">'LineWidth'</span>,2)
+title(<span class="string">'Error'</span>,<span class="string">'FontWeight'</span>,<span class="string">'bold'</span>,<span class="string">'FontSize'</span>,16)
+xlabel(<span class="string">'t'</span>,<span class="string">'FontWeight'</span>,<span class="string">'bold'</span>,<span class="string">'FontSize'</span>,16)
+axis <span class="string">auto</span>
+grid <span class="string">on</span>
+
+subplot(3,2,6)
+e=f(t1)-sf;
+area(t1,e.^2)
+legend(<span class="string">'Energia del error'</span>,<span class="string">'Location'</span>,<span class="string">'Best'</span>)
+xlabel(<span class="string">'t'</span>,<span class="string">'FontWeight'</span>,<span class="string">'bold'</span>,<span class="string">'FontSize'</span>,16)
+axis <span class="string">auto</span>
+grid <span class="string">on</span>
+
+absdn=zeros(1,length(nn));
+cont=1;
+<span class="keyword">for</span> i =-armo:armo
+    <span class="keyword">if</span> i==0
+        absdn(cont)=d0;
+    <span class="keyword">end</span>
+    
+    absdn(cont)=dn(i);
+    cont=cont+1;
+<span class="keyword">end</span>
+
+subplot(3,2,3)
+stem(w0*nn,abs(absdn),<span class="string">'LineWidth'</span>,2)
+title(<span class="string">'Espectro de magnitud D_n '</span>,<span class="string">'FontWeight'</span>,<span class="string">'bold'</span>,<span class="string">'FontSize'</span>,16)
+xlabel(<span class="string">'\omega'</span>,<span class="string">'FontWeight'</span>,<span class="string">'bold'</span>,<span class="string">'FontSize'</span>,16)
+grid <span class="string">on</span>
+
+subplot(3,2,5) <span class="comment">% % </span>
+stem(w0*nn,angle(absdn),<span class="string">'LineWidth'</span>,2) <span class="comment">% % </span>
+title(<span class="string">'Espectro de fase, \angle de D_n '</span>,<span class="string">'FontWeight'</span>,<span class="string">'bold'</span>,<span class="string">'FontSize'</span>,16) <span class="comment">% % </span>
+xlabel(<span class="string">'\omega'</span>,<span class="string">'FontWeight'</span>,<span class="string">'bold'</span>,<span class="string">'FontSize'</span>,16)
+grid <span class="string">on</span>
+
+<span class="keyword">end</span>
+
+</pre><p>Funci&oacute;n <i><b>sft.m</b></i> para la graficaci&oacute;n de la se&ntilde;al, la serie de Fourier (<b>trigonom&eacute;trica</b>), el error, la energ&iacute;a del error y los espectros de magnitud y fase.</p><pre class="language-matlab">
+<span class="keyword">function</span> sft(t0,tf,ao,an,bn,f,armo,a,b)
+
+wo=2*pi/(tf-t0);
+sf=ao;
+t=-tf:0.0001:t0;
+
+<span class="keyword">for</span> n=1:armo
+    sf=sf+an(n)*cos(wo*n*t)+bn(n)*sin(wo*n*t);
+<span class="keyword">end</span>
+
+hFig = figure;
+set(hFig, <span class="string">'Position'</span>, [-100 0 700 700])
+subplot(3,2,1)
+plot(t,sf,<span class="string">'LineWidth'</span>,2)
+grid <span class="string">on</span>
+legend(<span class="string">'Serie de Fourier Trigo'</span>,<span class="string">'Location'</span>,<span class="string">'Best'</span>)
+xlabel(<span class="string">'t'</span>,<span class="string">'FontWeight'</span>,<span class="string">'bold'</span>,<span class="string">'FontSize'</span>,16)
+
+sf=ao;
+t1=t0:0.0001:tf;
+<span class="keyword">for</span> n=1:armo
+    sf=sf+an(n)*cos(wo*n*t)+bn(n)*sin(wo*n*t);
+<span class="keyword">end</span>
+
+subplot(3,2,2)
+plot(t1,f(t1),<span class="string">'r'</span>,<span class="string">'LineWidth'</span>,2)
+grid <span class="string">on</span>
+hold <span class="string">on</span>
+plot(t1,sf,<span class="string">'LineWidth'</span>,2)
+legend(<span class="string">'Funci&oacute;n original'</span>,<span class="string">'Serie de Fourier '</span>,<span class="string">'Location'</span>,<span class="string">'Best'</span>)
+xlabel(<span class="string">'t'</span>,<span class="string">'FontWeight'</span>,<span class="string">'bold'</span>,<span class="string">'FontSize'</span>,16)
+nn=-armo:armo;
+axis <span class="string">auto</span>
+
+subplot(3,2,4)
+e=f(t1)-sf;
+plot(t1,e,<span class="string">'LineWidth'</span>,2)
+title(<span class="string">'Error'</span>,<span class="string">'FontWeight'</span>,<span class="string">'bold'</span>,<span class="string">'FontSize'</span>,16)
+xlabel(<span class="string">'t'</span>,<span class="string">'FontWeight'</span>,<span class="string">'bold'</span>,<span class="string">'FontSize'</span>,16)
+axis <span class="string">auto</span>
+grid <span class="string">on</span>
+
+subplot(3,2,6)
+e=f(t1)-sf;
+area(t1,e.^2)
+legend(<span class="string">'Energia del error'</span>,<span class="string">'Location'</span>,<span class="string">'Best'</span>)
+xlabel(<span class="string">'t'</span>,<span class="string">'FontWeight'</span>,<span class="string">'bold'</span>,<span class="string">'FontSize'</span>,16)
+axis <span class="string">auto</span>
+grid <span class="string">on</span>
+
+n = 1:armo; a_n(1) = 0.504; a_n(n+1) = 0.504*2./(1+16*n.^2);
+ b_n(1) = 0; b_n(n+1) = 0.504*8*n./(1+16*n.^2);
+ c_n(1) = a_n(1); c_n(n+1) = sqrt (a_n(n+1).^2+b_n(n+1).^2);
+ theta_n(1) = 0; theta_n(n+1) = atan2(-b_n(n+1),a_n(n+1));
+ n = [0,n];
+ 
+subplot(3,2,3)
+stem(c_n,<span class="string">'LineWidth'</span>,2);
+title(<span class="string">'Espectro de magnitud D_n '</span>,<span class="string">'FontWeight'</span>,<span class="string">'bold'</span>,<span class="string">'FontSize'</span>,16)
+xlabel(<span class="string">'\omega'</span>,<span class="string">'FontWeight'</span>,<span class="string">'bold'</span>,<span class="string">'FontSize'</span>,16)
+grid <span class="string">on</span>
+
+subplot(3,2,5) <span class="comment">% %</span>
+stem(n,theta_n,<span class="string">'LineWidth'</span>,2);
+title(<span class="string">'Espectro de fase, \angle de D_n '</span>,<span class="string">'FontWeight'</span>,<span class="string">'bold'</span>,<span class="string">'FontSize'</span>,16) <span class="comment">% % </span>
+xlabel(<span class="string">'\omega'</span>,<span class="string">'FontWeight'</span>,<span class="string">'bold'</span>,<span class="string">'FontSize'</span>,16)
+grid <span class="string">on</span>
+
+<span class="keyword">end</span>
+
+</pre><p>Funci&oacute;n <i><b>sfd.m</b></i> para la serie de Fourier (<b>exponencial compleja</b>), y los espectros de magnitud y fase. (Utilizada para el ejemplo 8.7)</p><pre class="language-matlab">
+<span class="keyword">function</span> sfd(t0,tf,dn,d0,f,armo,a,b)
+
+w0=2*pi/(tf-t0);
+
+sf=d0;
+t=a:0.0001:b;
+
+<span class="keyword">for</span> n=1:armo
+    sf=sf+dn(-n)*exp(w0*-n*t*j)+dn(n)*exp(w0*n*t*j);
+<span class="keyword">end</span>
+
+hFig = figure;
+set(hFig, <span class="string">'Position'</span>, [0 0 900 900])
+subplot(2,2,1)
+plot(t,sf,<span class="string">'LineWidth'</span>,2)
+grid <span class="string">on</span>
+legend(<span class="string">'Serie de Fourier'</span>,<span class="string">'Location'</span>,<span class="string">'Best'</span>)
+xlabel(<span class="string">'t'</span>,<span class="string">'FontWeight'</span>,<span class="string">'bold'</span>,<span class="string">'FontSize'</span>,16)
+
+sf=d0;
+t1=t0:0.0001:tf;
+
+<span class="keyword">for</span> n=1:armo
+    sf=sf+dn(-n)*exp(w0*-n*t1*j)+dn(n)*exp(w0*n*t1*j);
+<span class="keyword">end</span>
+
+nn=-armo:armo;
+absdn=zeros(1,length(nn));
+cont=1;
+<span class="keyword">for</span> i =-armo:armo
+    <span class="keyword">if</span> i==0
+        absdn(cont)=d0;
+    <span class="keyword">end</span>
+    
+    absdn(cont)=dn(i);
+    cont=cont+1;
+<span class="keyword">end</span>
+
+subplot(2,2,2)
+stem(w0*nn,abs(absdn),<span class="string">'LineWidth'</span>,2)
+title(<span class="string">'Espectro de magnitud D_n '</span>,<span class="string">'FontWeight'</span>,<span class="string">'bold'</span>,<span class="string">'FontSize'</span>,16)
+xlabel(<span class="string">'\omega'</span>,<span class="string">'FontWeight'</span>,<span class="string">'bold'</span>,<span class="string">'FontSize'</span>,16)
+grid <span class="string">on</span>
+
+subplot(2,2,3) <span class="comment">% % </span>
+stem(w0*nn,angle(absdn),<span class="string">'LineWidth'</span>,2) <span class="comment">% % </span>
+title(<span class="string">'Espectro de fase, \angle de D_n '</span>,<span class="string">'FontWeight'</span>,<span class="string">'bold'</span>,<span class="string">'FontSize'</span>,16) <span class="comment">% % </span>
+xlabel(<span class="string">'\omega'</span>,<span class="string">'FontWeight'</span>,<span class="string">'bold'</span>,<span class="string">'FontSize'</span>,16)
+grid <span class="string">on</span>
+
+<span class="keyword">end</span>
+
+
+</pre><h2 id="4">Ejemplo 6.1</h2><p>Encontrar la serie de Fourier trigonom&eacute;trica para la se&ntilde;al peri&oacute;dica <img src="SySPrac05KarlaCordova_CristianAcosta_eq14177184131656836301.png" alt="$x(t) = e^{-\frac{t}{2}}$">.</p><pre class="codeinput">syms <span class="string">t</span> <span class="string">n</span>
+t1=linspace(-6,6,1000);
+x=@(t) (exp(-t/2).*(t&gt;0 &amp; t&lt;pi));
+T = pi;
+w0=2*pi/(T);
+figure
+plot(t1,x(t1+2*T)+x(t1+T)+x(t1)+x(t1-T)+x(t1-2*T),<span class="string">'g'</span>,<span class="string">'LineWidth'</span>,2);
+grid <span class="string">on</span>
+xlabel(<span class="string">'t'</span>,<span class="string">'FontWeight'</span>,<span class="string">'bold'</span>,<span class="string">'FontSize'</span>,16);
+title(<span class="string">'x(t) = e^{-t/2}'</span>,<span class="string">'FontWeight'</span>,<span class="string">'bold'</span>,<span class="string">'FontSize'</span>,16)
+</pre><img vspace="5" hspace="5" src="SySPrac05KarlaCordova_CristianAcosta_01.png" alt=""> <p>Se aplican las definiciones de <img src="SySPrac05KarlaCordova_CristianAcosta_eq10145827984828201794.png" alt="$D_0$"> y <img src="SySPrac05KarlaCordova_CristianAcosta_eq10922897471658752443.png" alt="$D_n$"> para calcular los coeficientes de Fourier:</p><pre class="codeinput">Do=0;
+    Do=int(exp(-t/2),<span class="string">'t'</span>,0,pi);
+Do=simplify(Do/T);
+Dn=0;
+    Dn = int(exp(-t/2)*exp(-n*j*w0*t),0,pi);
+Dn = simplify (Dn/T);
+</pre><p>Una vez obtenidos, se utiliza la funci&oacute;n <i><b>sfc.m</b></i> para calcular y graficar num&eacute;ricamente a la se&ntilde;al <img src="SySPrac05KarlaCordova_CristianAcosta_eq14833433867325483769.png" alt="$x(t)$"> en su forma de Fourier, espectros y la relaci&oacute;n con el error de aproximaci&oacute;n a la se&ntilde;al original (4 arm&oacute;nicos):</p><pre class="codeinput">Do= -(2*exp(-pi/2) - 2)/pi;
+Dn =@(n) (-(2*(exp(-(pi*(1+n*4*j))/2)-1))/(pi*(1+n*4*j)));
+t0= 0;
+tx= pi;
+armo=4;
+a=-9; b=9;
+figure
+sfc(t0,tx,Dn,Do,x,armo,a,b)
+</pre><img vspace="5" hspace="5" src="SySPrac05KarlaCordova_CristianAcosta_02.png" alt=""> <img vspace="5" hspace="5" src="SySPrac05KarlaCordova_CristianAcosta_03.png" alt=""> <p>Utilizando 15 arm&oacute;nicos las gr&aacute;ficas son:</p><pre class="codeinput">armo = 15;
+figure
+sfc(t0,tx,Dn,Do,x,armo,a,b)
+</pre><img vspace="5" hspace="5" src="SySPrac05KarlaCordova_CristianAcosta_04.png" alt=""> <img vspace="5" hspace="5" src="SySPrac05KarlaCordova_CristianAcosta_05.png" alt=""> <p>En forma trigonom&eacute;trica con 4 arm&oacute;nicos:</p><pre class="codeinput">Ao = Do;
+An = @(n) (Dn(n)+ Dn(-n));
+Bn = @(n) ((Dn(-n)-Dn(n))/j);
+armo = 4;
+sft(t0,tx,Ao,An,Bn,x,armo,t0,tx)
+</pre><img vspace="5" hspace="5" src="SySPrac05KarlaCordova_CristianAcosta_06.png" alt=""> <p>Con 15 arm&oacute;nicos:</p><pre class="codeinput">armo = 15;
+sft(t0,tx,Ao,An,Bn,x,armo,a,b)
+</pre><h2 id="16">Ejemplo 6.2</h2><p>Encontrar la serie de Fourier exponencial compleja para la se&ntilde;al peri&oacute;dica <img src="SySPrac05KarlaCordova_CristianAcosta_eq09478123530129115431.png" alt="$f(t)$"> siguiente:</p><pre class="codeinput">syms <span class="string">t</span> <span class="string">n</span>
+vec = [-0.5 0.5 1.5];
+fv = [6*t 6-6*t];
+t1=linspace(-4.5,5,1000);
+f=@(t) 6*((t).*(t&gt;=-1/2 &amp; t&lt;1/2)+(1-t).*(t&gt;=1/2 &amp; t&lt;3/2));
+T = 2;
+w0=2*pi/(T);
+figure
+plot(t1,f(t1+2*T)+f(t1+T)+f(t1)+f(t1-T)+f(t1-2*T),<span class="string">'g'</span>,<span class="string">'LineWidth'</span>,2);
+grid <span class="string">on</span>
+xlabel(<span class="string">'t'</span>,<span class="string">'FontWeight'</span>,<span class="string">'bold'</span>,<span class="string">'FontSize'</span>,16);
+title(<span class="string">'f(t)'</span>,<span class="string">'FontWeight'</span>,<span class="string">'bold'</span>,<span class="string">'FontSize'</span>,16)
+</pre><img vspace="5" hspace="5" src="SySPrac05KarlaCordova_CristianAcosta_07.png" alt=""> <p>Se aplican las definiciones de <img src="SySPrac05KarlaCordova_CristianAcosta_eq10145827984828201794.png" alt="$D_0$"> y <img src="SySPrac05KarlaCordova_CristianAcosta_eq10922897471658752443.png" alt="$D_n$"> para calcular los coeficientes de Fourier:</p><pre class="codeinput">Do=0;
+<span class="keyword">for</span> i=1:length(fv);
+    Do=Do +int(fv(i),<span class="string">'t'</span>, vec(i),vec(i+1));
+<span class="keyword">end</span>
+Do=simplify(Do/T);
+Dn=0;
+<span class="keyword">for</span> i=1:length(fv)
+    Dn = Dn +int(fv(i)*exp(-n*j*w0*t), vec(i), vec(i+1));
+<span class="keyword">end</span>
+Dn = simplify (Dn/T);
+</pre><p>Una vez obtenidos, se utiliza la funci&oacute;n <i><b>sfc.m</b></i> para calcular y graficar num&eacute;ricamente a la se&ntilde;al <img src="SySPrac05KarlaCordova_CristianAcosta_eq09478123530129115431.png" alt="$f(t)$"> en su forma de Fourier, espectros y la relaci&oacute;n con el error de aproximaci&oacute;n a la se&ntilde;al original (4 arm&oacute;nicos):</p><pre class="codeinput">Do=0;
+Dn =@(n) -(3*exp(-(3*pi*j*n)/2)*(exp(pi*j*n)-1)*(pi*j*n-2*exp(pi*j*n)+j*n*pi*exp(pi*j*n)+2))/(2*j^2*n^2*pi^2);
+t0=-1/2;
+tf=3/2;
+armo=4;
+a=-5;
+b=5.5;
+figure
+sfc(t0,tf,Dn,Do,f,armo,a,b);
+</pre><img vspace="5" hspace="5" src="SySPrac05KarlaCordova_CristianAcosta_08.png" alt=""> <img vspace="5" hspace="5" src="SySPrac05KarlaCordova_CristianAcosta_09.png" alt=""> <p>Utilizando 15 arm&oacute;nicos las gr&aacute;ficas son:</p><pre class="codeinput">armo = 15;
+figure
+sfc(t0,tf,Dn,Do,f,armo,a,b);
+</pre><img vspace="5" hspace="5" src="SySPrac05KarlaCordova_CristianAcosta_10.png" alt=""> <img vspace="5" hspace="5" src="SySPrac05KarlaCordova_CristianAcosta_11.png" alt=""> <h2 id="25">Ejemplo 6.4</h2><p>Encontrar la serie de Fourier exponencial compleja para la se&ntilde;al peri&oacute;dica <img src="SySPrac05KarlaCordova_CristianAcosta_eq00097224828082125527.png" alt="$g(t)$"> siguiente:</p><pre class="codeinput">syms <span class="string">t</span> <span class="string">n</span>
+t1=linspace(-6,6,1000);
+g=@(t) (t&gt;=-pi/2 &amp; t&lt;pi/2);
+vec= [-pi/2 pi/2 3*pi/2];
+gv =[1 0];
+gv = sym(gv);
+T = 2*pi;
+w0=2*pi/(T);
+figure
+plot(t1,g(t1+2*T)+g(t1+T)+g(t1)+g(t1-T)+g(t1-2*T),<span class="string">'g'</span>,<span class="string">'LineWidth'</span>,2);
+grid <span class="string">on</span>
+xlabel(<span class="string">'t'</span>,<span class="string">'FontWeight'</span>,<span class="string">'bold'</span>,<span class="string">'FontSize'</span>,16);
+title(<span class="string">'x(t) = e^{-t/2}'</span>,<span class="string">'FontWeight'</span>,<span class="string">'bold'</span>,<span class="string">'FontSize'</span>,16)
+</pre><img vspace="5" hspace="5" src="SySPrac05KarlaCordova_CristianAcosta_12.png" alt=""> <p>Se aplican las definiciones de <img src="SySPrac05KarlaCordova_CristianAcosta_eq10145827984828201794.png" alt="$D_0$"> y <img src="SySPrac05KarlaCordova_CristianAcosta_eq10922897471658752443.png" alt="$D_n$"> para calcular los coeficientes de Fourier:</p><pre class="codeinput">Do=0;
+<span class="keyword">for</span> i=1:length(gv);
+    Do=Do +int(gv(i),<span class="string">'t'</span>, vec(i),vec(i+1));
+<span class="keyword">end</span>
+Do=simplify(Do/T);
+Dn=0;
+<span class="keyword">for</span> i=1:length(gv)
+    Dn = Dn +int(gv(i)*exp(-n*j*w0*t), vec(i), vec(i+1));
+<span class="keyword">end</span>
+Dn = simplify (Dn/T);
+</pre><p>Una vez obtenidos, se utiliza la funci&oacute;n <i><b>sfc.m</b></i> para calcular y graficar num&eacute;ricamente a la se&ntilde;al <img src="SySPrac05KarlaCordova_CristianAcosta_eq00097224828082125527.png" alt="$g(t)$"> en su forma de Fourier, espectros y la relaci&oacute;n con el error de aproximaci&oacute;n a la se&ntilde;al original (4 arm&oacute;nicos):</p><pre class="codeinput">Do=1/2;
+Dn =@(n) sin((pi*n)/2)/(n*pi);
+t0=-pi/2;
+tg=3*pi/2;
+armo=4;
+a=-15;
+b=15;
+figure
+sfc(t0,tg,Dn,Do,g,armo,a,b);
+</pre><img vspace="5" hspace="5" src="SySPrac05KarlaCordova_CristianAcosta_13.png" alt=""> <img vspace="5" hspace="5" src="SySPrac05KarlaCordova_CristianAcosta_14.png" alt=""> <p>Utilizando 15 arm&oacute;nicos las gr&aacute;ficas son:</p><pre class="codeinput">armo = 15;
+figure
+sfc(t0,tg,Dn,Do,g,armo,a,b);
+</pre><img vspace="5" hspace="5" src="SySPrac05KarlaCordova_CristianAcosta_15.png" alt=""> <img vspace="5" hspace="5" src="SySPrac05KarlaCordova_CristianAcosta_16.png" alt=""> <h2 id="33">Ejercicio 6.5</h2><p>Encontrar la serie de Fourier exponencial compleja para la se&ntilde;al peri&oacute;dica <img src="SySPrac05KarlaCordova_CristianAcosta_eq00674779485841404895.png" alt="$e(t)$"> siguiente:</p><pre class="codeinput">syms <span class="string">t</span> <span class="string">n</span>
+t1=linspace(-6,6,1000);
+e=@(t) (abs(sin(t)).*(t&gt;=0 &amp; t&lt;pi));
+T = pi;
+w0=2*pi/(T);
+figure
+plot(t1,e(t1+2*T)+e(t1+T)+e(t1)+e(t1-T)+e(t1-2*T),<span class="string">'g'</span>,<span class="string">'LineWidth'</span>,2);
+grid <span class="string">on</span>
+xlabel(<span class="string">'t'</span>,<span class="string">'FontWeight'</span>,<span class="string">'bold'</span>,<span class="string">'FontSize'</span>,16);
+title(<span class="string">'g(t)'</span>,<span class="string">'FontWeight'</span>,<span class="string">'bold'</span>,<span class="string">'FontSize'</span>,16);
+</pre><img vspace="5" hspace="5" src="SySPrac05KarlaCordova_CristianAcosta_17.png" alt=""> <p>Se aplican las definiciones de <img src="SySPrac05KarlaCordova_CristianAcosta_eq10145827984828201794.png" alt="$D_0$"> y <img src="SySPrac05KarlaCordova_CristianAcosta_eq10922897471658752443.png" alt="$D_n$"> para calcular los coeficientes de Fourier:</p><pre class="codeinput">Do=0;
+    Do= int(abs(sin(t)),<span class="string">'t'</span>,0,pi);
+Do=simplify(Do/T);
+Dn=0;
+    Dn = int((abs(sin(t))).*exp(-n*j*w0*t),0,pi);
+Dn = simplify (Dn/T);
+</pre><p>Una vez obtenidos, se utiliza la funci&oacute;n <i><b>sfc.m</b></i> para calcular y graficar num&eacute;ricamente a la se&ntilde;al <img src="SySPrac05KarlaCordova_CristianAcosta_eq00674779485841404895.png" alt="$e(t)$"> en su forma de Fourier, espectros y la relaci&oacute;n con el error de aproximaci&oacute;n a la se&ntilde;al original (4 arm&oacute;nicos):</p><pre class="codeinput">Do=2/pi;
+Dn =@(n) -(exp(-pi*n*2i)+1)/(pi*(2*n-1)*(2*n+1));
+t0= 0;
+te= pi;
+armo=4;
+a=-7;
+b=10;
+figure
+sfc(t0,te,Dn,Do,e,armo,a,b);
+</pre><img vspace="5" hspace="5" src="SySPrac05KarlaCordova_CristianAcosta_18.png" alt=""> <img vspace="5" hspace="5" src="SySPrac05KarlaCordova_CristianAcosta_19.png" alt=""> <p>Utilizando 15 arm&oacute;nicos las gr&aacute;ficas son:</p><pre class="codeinput">armo = 15;
+figure
+sfc(t0,te,Dn,Do,e,armo,a,b);
+</pre><pre class="codeoutput">Warning: Imaginary parts of complex X and/or Y arguments ignored 
+Warning: Imaginary parts of complex X and/or Y arguments ignored 
+Warning: Imaginary parts of complex X and/or Y arguments ignored 
+Warning: Using only the real component of complex data. 
+</pre><img vspace="5" hspace="5" src="SySPrac05KarlaCordova_CristianAcosta_20.png" alt=""> <img vspace="5" hspace="5" src="SySPrac05KarlaCordova_CristianAcosta_21.png" alt=""> <h2 id="41">Ejemplo 6.7</h2><p>Encontrar la serie de Fourier exponencial compleja para la se&ntilde;al perdi&oacute;dia %f(t)% siguiente.</p><p>Se aplican las definiciones de <img src="SySPrac05KarlaCordova_CristianAcosta_eq10145827984828201794.png" alt="$D_0$"> y <img src="SySPrac05KarlaCordova_CristianAcosta_eq10922897471658752443.png" alt="$D_n$"> para calcular los coeficientes de Fourier. Sin enbargo, en esta caso, por la propiedad de Sampling, <img src="SySPrac05KarlaCordova_CristianAcosta_eq05058087989184211988.png" alt="$Dn = 1/To$"> . Como <img src="SySPrac05KarlaCordova_CristianAcosta_eq05110862799014894262.png" alt="$To=3$"> Entonnces:</p><pre class="codeinput">d0=1/3;
+dn=@(n) 1/3;
+t0=-3/2;
+tf=3/2;
+f=@(t) delta(0,-2,2);
+armo=4;
+a=-2;
+b=2;
+sfd(t0,tf,dn,d0,f,armo,a,b)
+</pre><img vspace="5" hspace="5" src="SySPrac05KarlaCordova_CristianAcosta_22.png" alt=""> <h2 id="43">Computer Example C6.2</h2><p>Basado en el c&oacute;digo de ejemplo <b>COMPUTER EXAMPLE C6.2</b> de Lathi, mostrar la se&ntilde;al del ejemplo 6.2 a&ntilde;adiendo sucesivamente los componentes de su serie exponencial compleja de Fourier.</p><pre class="codeinput">x=@(t) ((6*t).*(t&gt;=-1/2 &amp; t&lt;1/2)+(6-6*t).*(t&gt;=1/2 &amp; t&lt;3/2));
+t=linspace(-2*pi,2*pi,1000);
+sumterms=zeros(16,length(t));sumterms(1,:)=0;
+<span class="keyword">for</span> n=1:size(sumterms,1)-1;
+    sumterms(n+1,:)=2*(-(3*exp(-(3*pi*j*n)/2)*(exp(pi*j*n)-1)*(pi*j*n-2*exp(pi*j*n)+j*n*pi*exp(pi*j*n)+2))/(2*j^2*n^2*pi^2))*(exp(n*pi*j*t));
+<span class="keyword">end</span>
+x_N=cumsum(sumterms);
+figure(1); clf;ind=0;
+<span class="keyword">for</span> N=[0,1:2:size(sumterms,1)-1];
+    ind=ind+1;
+    subplot(3,3,ind);
+    plot(t,x(t+4)+x(t+2)+x(t)+x(t-2)+x(t-4),<span class="string">'k--'</span>);
+    hold <span class="string">on</span>
+    plot(t,real(x_N(N+1,:)),<span class="string">'m'</span>);axis([-4.5 3.5 -4 4]);
+    grid <span class="string">on</span>
+    xlabel(<span class="string">'t'</span>);
+    ylabel([<span class="string">'x_{'</span>,num2str(N),<span class="string">'}(t)'</span>]);
+<span class="keyword">end</span>
+</pre><img vspace="5" hspace="5" src="SySPrac05KarlaCordova_CristianAcosta_23.png" alt=""> <h2 id="45">Algoritmo de Trapecio</h2><p>Elaborar un algoritmo de trapecio compuesto para <img src="SySPrac05KarlaCordova_CristianAcosta_eq08501079337458606022.png" alt="$n=15$">. Utilizar ese c&oacute;digo para aproximar <img src="SySPrac05KarlaCordova_CristianAcosta_eq15865840780321570647.png" alt="$D_{0},...,D_{4}$">, del ejemplo de la pr&aacute;ctica. Despu&eacute;s implementar el c&oacute;digo EXAMPLE C6.4 del libro de Lathi y calcular nuevamente los coeficientes <img src="SySPrac05KarlaCordova_CristianAcosta_eq15865840780321570647.png" alt="$D_{0},...,D_{4}$"> del ejemplo propuesto. Mostrar una tabla que contenga los coeficientes mencionados calculados con los 2 algoritmos y de forma exacta. &iquest;Qu&eacute; algoritmo aproxima mejor las coeficientes? Compare los valores con el valor absoluto de la resta.</p><p>Creamos la funcion para el algoritmo del trapecio</p><pre class="codeinput">a = 0; <span class="comment">%limite inferior</span>
+b = pi; <span class="comment">%limite superior</span>
+f=@(t) exp(-t/2); <span class="comment">%funcion</span>
+n = 15; <span class="comment">%valor de n = 15</span>
+
+h = (b-a)/n;
+s = 0;
+hold <span class="string">on</span>
+figure
+<span class="keyword">for</span> i=1:n
+    s = h/2*(f(a*(i-1)*h)*f(a+(i)*h))+s;
+<span class="keyword">end</span>
+
+x1=linspace(a,b,n);
+y1=subs(f,x1);
+bar(x1,y1)
+plot(x1,y1,<span class="string">'m'</span>,<span class="string">'LineWidth'</span>,3)
+xlabel(<span class="string">'t'</span>,<span class="string">'FontWeight'</span>,<span class="string">'bold'</span>,<span class="string">'FontSize'</span>,16)
+title(<span class="string">'Metodo del trapecio. f(t)=e^{-t/2}'</span>)
+</pre><img vspace="5" hspace="5" src="SySPrac05KarlaCordova_CristianAcosta_24.png" alt=""> <p>Ahora calcularemos los <img src="SySPrac05KarlaCordova_CristianAcosta_eq13651414835754347523.png" alt="$Dn$"> para <img src="SySPrac05KarlaCordova_CristianAcosta_eq01702479497164411495.png" alt="$0&gt;n&gt;4$"></p><pre class="codeinput">syms <span class="string">t</span> <span class="string">n</span> <span class="string">A</span>
+vec = [a b];
+trap = [f];
+trap = sym(trap);
+T = max(vec)-min(vec);
+w0 = 2*pi/(T);
+
+Do=0;
+<span class="keyword">for</span> i=1:length(trap);
+    Do= Do+int(trap(i),<span class="string">'t'</span>, vec(i),vec(i+1));
+<span class="keyword">end</span>
+Do=simplify(Do/T);
+fprintf(<span class="string">'D0 = %f\n'</span>,Do)
+
+D1=0;
+<span class="keyword">for</span> i=1:length(g);
+    D1 = Do+int(g(i)*exp(-1*j*w0*t), vec(i), vec(i+1));
+<span class="keyword">end</span>
+D1 = simplify (D1/T);
+Y1 = abs(D1);
+fprintf(<span class="string">'D1 = %f\n'</span>,Y1)
+
+D2=0;
+<span class="keyword">for</span> i=1:length(g);
+    D2 = int(g(i)*exp(-2*j*w0*t), vec(i), vec(i+1));
+<span class="keyword">end</span>
+D2 = simplify (D2/T);
+Y2 = abs(D2);
+fprintf(<span class="string">'D2 = %f\n'</span>,Y2)
+
+D3=0;
+<span class="keyword">for</span> i=1:length(g);
+    D3 = int(g(i)*exp(-3*j*w0*t), vec(i), vec(i+1));
+<span class="keyword">end</span>
+D3 = simplify (D3/T);
+Y3 = abs(D3);
+fprintf(<span class="string">'D3 = %f\n'</span>,Y3)
+
+D4=0;
+<span class="keyword">for</span> i=1:length(g);
+    D4 = int(g(i)*exp(-4*j*w0*t), vec(i), vec(i+1));
+<span class="keyword">end</span>
+D4 = simplify (D4/T);
+Y4 = abs(D4);
+fprintf(<span class="string">'D4 = %f\n'</span>,Y4)
+</pre><pre class="codeoutput">D0 = 0.504280
+D1 = 0.160517
+D2 = 0.000000
+D3 = 0.000000
+D4 = 0.000000
+</pre><p>Ahora los resultados para el c&oacute;digo de Lathi</p><pre class="codeinput">T_0 = pi; N_0 = 10; T = T_0/N_0; t = (0:T:T*(N_0 - 1))'; M = 4.5;
+x = exp(-t/2); x(1) = (exp(-pi/2))/2;
+D_n = fft (x)/N_0; n = [-N_0/2:N_0/2-1]';
+<span class="comment">%Y = abs(D_n);</span>
+clf; subplot(1,1,1); stem(n,abs(fftshift (D_n)),<span class="string">'m'</span>);
+p = fftshift (D_n);
+abs(p)
+axis([-M M -.1 .6]); xlabel(<span class="string">'n'</span>); ylabel(<span class="string">'|D_n|'</span>);
+</pre><pre class="codeoutput">
+ans =
+
+    0.0469
+    0.0483
+    0.0535
+    0.0675
+    0.1161
+    0.4553
+    0.1161
+    0.0675
+    0.0535
+    0.0483
+
+</pre><img vspace="5" hspace="5" src="SySPrac05KarlaCordova_CristianAcosta_25.png" alt=""> <p>LA siguiente tabla muestra los valores de <img src="SySPrac05KarlaCordova_CristianAcosta_eq13651414835754347523.png" alt="$Dn$"> para ambos casos, as&iacute; como los valores exactos, los valores de diferenciaci&oacute;n y el Dn m&aacute;s aproximado a los valores exactos para cada punto,</p><p><img vspace="5" hspace="5" src="Tabla.png" alt=""> </p><h2 id="50">Referencias.</h2><div><ul><li>B.P. Lathi. (2005). chapter 6.6. <i>Linear Systems and Signals</i>. E.U.A: Oxford University Press.</li><li>Ingenier&iacute;a T&eacute;cnica Industrial. <i>Tema 7.- Series de Fourier</i>, de - Sitio web: <a href="http://personal.us.es/niejimjim/tema07.pdf">http://personal.us.es/niejimjim/tema07.pdf</a></li><li>sprigan2001. (2011). <i>MUESTREO EN MATLAB</i>. de - Sitio web: https://www.youtube.com/watch?v=zNAaDCEMHBA</li><li>Jorge Zambrano Ibuj&eacute;s. (2012). <i>Calculo de los coeficientes de la serie de fourier en matlab</i>. de - Sitio web: https://www.youtube.com/watch?v=dACnin4QS1M</li><li>Universidad Estatal a Distancia de Costa Rica (UNED). Regla del trapecio. <i>Aproximaci&oacute;n de integrales</i>. de - Sitio web: <a href="http://repositorio.uned.ac.cr/multimedias/metodos_numericos_ensenanza/modulo4/descripcion.html">http://repositorio.uned.ac.cr/multimedias/metodos_numericos_ensenanza/modulo4/descripcion.html</a></li></ul></div><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2017b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Práctica 5: Series de Fourier
+% *Autor:* 
+%
+% *Acosta Villa Cristian Abraham*
+%
+% *Córdova Fernández Karla Lilia*
+%
+% *SEÑALES Y SISTEMAS, Grupo 2TV1*
+%
+%% Objetivos de la práctica.
+% * Realizar gráficas de series de Fourier exponenciales y trigonométricas
+% en tiempo continuo.
+% * Manipulación de instrucciones en MATLAB.
+% Cálculo númerico de los coeficientes de Fourier.
+%
+%% Introducción.
+%
+% * *Coeficientes de Fourier exponencial compleja.*
+%
+% Las series de Fourier son series de términos coseno y seno y surgen en
+% la tarea práctica de representar funciones periódicas generales. Como
+% aplicación constituyen una herramienta muy importante en la solución de
+% problemas en los que intervienen ecuaciones diferenciales ordinarias y
+% parciales.
+% Las series de Fourier pueden adoptar una forma diferente de reescribirse
+% sin utilizar senos y cosenos, en su lugar, utilizando la exponencial compleja.
+% La definición de una serie de Fourier exponencial compleja se da como:
+%
+% $$ \sum_{n=-\infty }^{\infty} D_n e^{jn \omega_0 t}$
+%
+% Donde $D_n$ es el coeficiente de Fourier y está dado como:
+%
+% $$ D_n = \frac{1}{T_0}$ $$ \int_{T_0} f(t) e^{-jn \omega_0 t} dt$
+%
+% Donde $T_0 = \frac{2\pi}{\omega_0}$(un período) y $f(t)$ es la señal a representar en
+% forma de serie.
+%
+% * *APROXIMACIÓN NUMÉRICA.*
+%
+% Cuando se tiene un intervalo de muestreo $T$ de la señal, $D_n$ puede ser
+% interpretado también:
+%
+% $$ D_n = \lim_{T \to 0} \frac{1}{N_0T} \sum_{k=0}^{N_0-1} f(kT) e^{-jn \omega_0 kT}T$
+%
+% $$ = \lim_{T \to 0} \frac{1}{N_0} \sum_{k=0}^{N_0-1} f(kT) e^{-jn \Omega_0 k}$
+%
+% Donde $N_0 = \frac{T_0}{T}$ (número de muestras en un período), $\Omega_0
+% = \omega_0T=\frac{2\pi }{N_0}$ y $f(kT)$ representa la kT-ésima muestra
+% de $f(t)$.
+%
+% Cómo T tiende a cero y este caso es imposible en la vida práctica y en
+% su cálculo numéricamente en Software, el límite puede omitirse y
+% simplificarse la ecuación del coeficiente de Fourier como:
+%
+% $$ D_n = \frac{1}{N_0} \sum_{k=0}^{N_0-1} f(kT) e^{-jn \Omega_0 k}$
+%
+% * *Teorema fundamental del cálculo.*
+% 
+% La integración numérica definida como $$ \int_{a}^{b}f(x) dx$ es el área
+% determinada por $f(x)$ entre el intervalo que va desde el valor _a_ hasta el
+% valor _b_. Para resolver la integración numérica utilizando el teorema
+% fundamental del cálculo, se tienen algunas condiciones:
+% 
+% # f(x) debe ser integrable (toda función contínua es integrable en un
+% intervalo).
+% # $\frac{dF(x)}{dx} = f(x)$.
+%
+% Por lo tanto:
+% $$ \int_{a}^{b}f(x) dx = F(a) - F(b)$
+% 
+% Siendo $F(x)$ la antiderivada. Calcular la antiderivada puede ser difícil o
+% incluso imposible. Uno de los métodos posibles aplicables para hallar la antiderivada
+% de una función es mediante la aproximación
+% con polinomios, eligiéndose el más parecido $P(x)$.
+%
+% Para el cáculo del coeficiente $D_n$, utilizando el teorema fundamental del
+% cálculo:
+%
+% $$ D_n = \frac{1}{T_0}$ $$ \int_{T_0} f(t) e^{-jn \omega_0 t} dt = G(T_0)-G(0)$
+%
+% Donde $G(t)$ representa a la antiderivada del producto $f(t) e^{-jn
+% \omega_0 t}$ , una vez comprobado que es integrable.
+%
+% * *Algoritmo de Trapecio.*
+% El algoritmo de Trapecio o regla de Trapecio se trata de un método para
+% calcular aproximaciones numéricas de integrales definidas. 
+%
+% Para el polinomio interpolante de primer grado se obtiene.
+%
+% $$ A = \infty_{a}^{b}f(x)dx = $
+%
+% donde:
+%
+% $$ f_{1} = f(a) + \frac{f(b)-f(a)}{b-a}(x-a)
+%
+% El área bajo la recta es una aproximación de la integral
+% $\infty_{a}^{b}f(x)dx$. Luego se tiene que la regla de trapecio está dado
+% por:
+% 
+% <<form_trap.png>>
+%
+%
+% El nombre de regla de trapecio se debe a la interpretación geométrica que
+% se hace de la fórmula. Cuando el polinomio interpolante de grado uno, la
+% gráfica representa una línea recta en el intervalo $[a,b]$ que es el área
+% del trapecio que se forma.
+%
+% <<fig_trap.png>>
+%
+%% Funciones utilizadas en la práctica.
+%
+% Función _*sfc.m*_ para la graficación de la señal, la serie de Fourier (*exponencial compleja*),
+% el error, la energía del error y los espectros de magnitud y fase.
+%
+% <include>sfc.m</include>
+%
+% Función _*sft.m*_ para la graficación de la señal, la serie de Fourier (*trigonométrica*),
+% el error, la energía del error y los espectros de magnitud y fase.
+%
+% <include>sft.m</include>
+%
+% Función _*sfd.m*_ para la serie de Fourier (*exponencial compleja*),
+% y los espectros de magnitud y fase. (Utilizada para el ejemplo 8.7)
+%
+% <include>sfd.m</include>
+%
+%% Ejemplo 6.1
+%
+% Encontrar la serie de Fourier trigonométrica para la señal
+% periódica $x(t) = e^{-\frac{t}{2}}$.
+% 
+%%
+syms t n
+t1=linspace(-6,6,1000);
+x=@(t) (exp(-t/2).*(t>0 & t<pi));
+T = pi;
+w0=2*pi/(T);
+figure
+plot(t1,x(t1+2*T)+x(t1+T)+x(t1)+x(t1-T)+x(t1-2*T),'g','LineWidth',2);
+grid on
+xlabel('t','FontWeight','bold','FontSize',16);
+title('x(t) = e^{-t/2}','FontWeight','bold','FontSize',16)
+%%
+% Se aplican las definiciones de $D_0$ y $D_n$ para calcular los coeficientes de Fourier:
+%
+%%
+Do=0;
+    Do=int(exp(-t/2),'t',0,pi);
+Do=simplify(Do/T);
+Dn=0;
+    Dn = int(exp(-t/2)*exp(-n*j*w0*t),0,pi);
+Dn = simplify (Dn/T);
+%%
+% Una vez obtenidos, se utiliza la función _*sfc.m*_ para calcular y graficar
+% numéricamente a la señal $x(t)$ en su forma de Fourier, espectros y la relación
+% con el error de aproximación a la señal original (4 armónicos):
+%
+%%
+Do= -(2*exp(-pi/2) - 2)/pi;
+Dn =@(n) (-(2*(exp(-(pi*(1+n*4*j))/2)-1))/(pi*(1+n*4*j)));
+t0= 0;
+tx= pi;
+armo=4;
+a=-9; b=9;
+figure
+sfc(t0,tx,Dn,Do,x,armo,a,b)
+%%
+% Utilizando 15 armónicos las gráficas son:
+%%
+armo = 15;
+figure
+sfc(t0,tx,Dn,Do,x,armo,a,b)
+%%
+% En forma trigonométrica con 4 armónicos:
+%%
+Ao = Do;
+An = @(n) (Dn(n)+ Dn(-n));
+Bn = @(n) ((Dn(-n)-Dn(n))/j);
+armo = 4;
+sft(t0,tx,Ao,An,Bn,x,armo,t0,tx)
+%%
+% Con 15 armónicos:
+%%
+armo = 15;
+sft(t0,tx,Ao,An,Bn,x,armo,a,b)
+
+%% Ejemplo 6.2
+% Encontrar la serie de Fourier exponencial compleja para la señal
+% periódica $f(t)$ siguiente:
+%%
+syms t n
+vec = [-0.5 0.5 1.5];
+fv = [6*t 6-6*t];
+t1=linspace(-4.5,5,1000);
+f=@(t) 6*((t).*(t>=-1/2 & t<1/2)+(1-t).*(t>=1/2 & t<3/2));
+T = 2;
+w0=2*pi/(T);
+figure
+plot(t1,f(t1+2*T)+f(t1+T)+f(t1)+f(t1-T)+f(t1-2*T),'g','LineWidth',2);
+grid on
+xlabel('t','FontWeight','bold','FontSize',16);
+title('f(t)','FontWeight','bold','FontSize',16)
+%%
+% Se aplican las definiciones de $D_0$ y $D_n$ para calcular los coeficientes de Fourier:
+%
+%%
+Do=0;
+for i=1:length(fv);
+    Do=Do +int(fv(i),'t', vec(i),vec(i+1));
+end
+Do=simplify(Do/T);
+Dn=0;
+for i=1:length(fv) 
+    Dn = Dn +int(fv(i)*exp(-n*j*w0*t), vec(i), vec(i+1)); 
+end
+Dn = simplify (Dn/T);
+%%
+% Una vez obtenidos, se utiliza la función _*sfc.m*_ para calcular y graficar
+% numéricamente a la señal $f(t)$ en su forma de Fourier, espectros y la relación
+% con el error de aproximación a la señal original (4 armónicos):
+%
+%%
+Do=0;
+Dn =@(n) -(3*exp(-(3*pi*j*n)/2)*(exp(pi*j*n)-1)*(pi*j*n-2*exp(pi*j*n)+j*n*pi*exp(pi*j*n)+2))/(2*j^2*n^2*pi^2);
+t0=-1/2;
+tf=3/2;
+armo=4;
+a=-5;
+b=5.5;
+figure
+sfc(t0,tf,Dn,Do,f,armo,a,b);
+%%
+% Utilizando 15 armónicos las gráficas son:
+%%
+armo = 15;
+figure
+sfc(t0,tf,Dn,Do,f,armo,a,b);
+%%
+%% Ejemplo 6.4
+% Encontrar la serie de Fourier exponencial compleja para la señal
+% periódica $g(t)$ siguiente:
+%%
+syms t n
+t1=linspace(-6,6,1000);
+g=@(t) (t>=-pi/2 & t<pi/2);
+vec= [-pi/2 pi/2 3*pi/2]; 
+gv =[1 0];
+gv = sym(gv);
+T = 2*pi;
+w0=2*pi/(T);
+figure
+plot(t1,g(t1+2*T)+g(t1+T)+g(t1)+g(t1-T)+g(t1-2*T),'g','LineWidth',2);
+grid on
+xlabel('t','FontWeight','bold','FontSize',16);
+title('x(t) = e^{-t/2}','FontWeight','bold','FontSize',16)
+%%
+% Se aplican las definiciones de $D_0$ y $D_n$ para calcular los coeficientes de Fourier:
+%
+%%
+Do=0;
+for i=1:length(gv);
+    Do=Do +int(gv(i),'t', vec(i),vec(i+1));
+end
+Do=simplify(Do/T);
+Dn=0;
+for i=1:length(gv) 
+    Dn = Dn +int(gv(i)*exp(-n*j*w0*t), vec(i), vec(i+1)); 
+end
+Dn = simplify (Dn/T);
+%%
+% Una vez obtenidos, se utiliza la función _*sfc.m*_ para calcular y graficar
+% numéricamente a la señal $g(t)$ en su forma de Fourier, espectros y la relación
+% con el error de aproximación a la señal original (4 armónicos):
+%
+%%
+Do=1/2;
+Dn =@(n) sin((pi*n)/2)/(n*pi);
+t0=-pi/2;
+tg=3*pi/2;
+armo=4;
+a=-15;
+b=15;
+figure
+sfc(t0,tg,Dn,Do,g,armo,a,b);
+%%
+% Utilizando 15 armónicos las gráficas son:
+%%
+armo = 15;
+figure
+sfc(t0,tg,Dn,Do,g,armo,a,b);
+%% Ejercicio 6.5
+% Encontrar la serie de Fourier exponencial compleja para la señal
+% periódica $e(t)$ siguiente:
+%%
+syms t n
+t1=linspace(-6,6,1000);
+e=@(t) (abs(sin(t)).*(t>=0 & t<pi));
+T = pi;
+w0=2*pi/(T);
+figure
+plot(t1,e(t1+2*T)+e(t1+T)+e(t1)+e(t1-T)+e(t1-2*T),'g','LineWidth',2);
+grid on
+xlabel('t','FontWeight','bold','FontSize',16);
+title('g(t)','FontWeight','bold','FontSize',16);
+%%
+% Se aplican las definiciones de $D_0$ y $D_n$ para calcular los coeficientes de Fourier:
+%
+%%
+Do=0;
+    Do= int(abs(sin(t)),'t',0,pi);
+Do=simplify(Do/T);
+Dn=0;
+    Dn = int((abs(sin(t))).*exp(-n*j*w0*t),0,pi); 
+Dn = simplify (Dn/T);
+%%
+% Una vez obtenidos, se utiliza la función _*sfc.m*_ para calcular y graficar
+% numéricamente a la señal $e(t)$ en su forma de Fourier, espectros y la relación
+% con el error de aproximación a la señal original (4 armónicos):
+%
+%%
+Do=2/pi;
+Dn =@(n) -(exp(-pi*n*2i)+1)/(pi*(2*n-1)*(2*n+1));
+t0= 0;
+te= pi;
+armo=4;
+a=-7;
+b=10;
+figure
+sfc(t0,te,Dn,Do,e,armo,a,b);
+%%
+% Utilizando 15 armónicos las gráficas son:
+%%
+armo = 15;
+figure
+sfc(t0,te,Dn,Do,e,armo,a,b);
+%% Ejemplo 6.7
+% Encontrar la serie de Fourier exponencial compleja para la señal
+% perdiódia %f(t)% siguiente.
+%
+%%
+% Se aplican las definiciones de $D_0$ y $D_n$ para calcular los
+% coeficientes de Fourier. Sin enbargo, en esta caso, por la propiedad
+% de Sampling, $Dn = 1/To$ . Como $To=3$ Entonnces:
+%
+d0=1/3;
+dn=@(n) 1/3;
+t0=-3/2;
+tf=3/2;
+f=@(t) delta(0,-2,2);
+armo=4;
+a=-2;
+b=2;
+sfd(t0,tf,dn,d0,f,armo,a,b)
+%% Computer Example C6.2
+% Basado en el código de ejemplo *COMPUTER EXAMPLE C6.2* de Lathi, mostrar
+% la señal del ejemplo 6.2 añadiendo sucesivamente los componentes de su
+% serie exponencial compleja de Fourier.
+%
+%%
+x=@(t) ((6*t).*(t>=-1/2 & t<1/2)+(6-6*t).*(t>=1/2 & t<3/2));
+t=linspace(-2*pi,2*pi,1000);
+sumterms=zeros(16,length(t));sumterms(1,:)=0;
+for n=1:size(sumterms,1)-1;
+    sumterms(n+1,:)=2*(-(3*exp(-(3*pi*j*n)/2)*(exp(pi*j*n)-1)*(pi*j*n-2*exp(pi*j*n)+j*n*pi*exp(pi*j*n)+2))/(2*j^2*n^2*pi^2))*(exp(n*pi*j*t));
+end
+x_N=cumsum(sumterms);
+figure(1); clf;ind=0;
+for N=[0,1:2:size(sumterms,1)-1];
+    ind=ind+1;
+    subplot(3,3,ind);
+    plot(t,x(t+4)+x(t+2)+x(t)+x(t-2)+x(t-4),'kREPLACE_WITH_DASH_DASH');
+    hold on
+    plot(t,real(x_N(N+1,:)),'m');axis([-4.5 3.5 -4 4]);
+    grid on
+    xlabel('t');
+    ylabel(['x_{',num2str(N),'}(t)']);
+end
+
+%% Algoritmo de Trapecio
+% Elaborar un algoritmo de trapecio compuesto para $n=15$. Utilizar ese
+% código para aproximar $D_{0},...,D_{4}$, del ejemplo de la práctica.
+% Después implementar el código EXAMPLE C6.4 del libro de Lathi y calcular
+% nuevamente los coeficientes $D_{0},...,D_{4}$ del ejemplo propuesto.
+% Mostrar una tabla que contenga los coeficientes mencionados calculados 
+% con los 2 algoritmos y de forma exacta. ¿Qué algoritmo aproxima mejor las
+% coeficientes? Compare los valores con el valor absoluto de la resta.
+%%
+% Creamos la funcion para el algoritmo del trapecio
+a = 0; %limite inferior
+b = pi; %limite superior
+f=@(t) exp(-t/2); %funcion
+n = 15; %valor de n = 15
+
+h = (b-a)/n; 
+s = 0;
+hold on
+figure 
+for i=1:n
+    s = h/2*(f(a*(i-1)*h)*f(a+(i)*h))+s;
+end
+
+x1=linspace(a,b,n);
+y1=subs(f,x1);
+bar(x1,y1)
+plot(x1,y1,'m','LineWidth',3)
+xlabel('t','FontWeight','bold','FontSize',16)
+title('Metodo del trapecio. f(t)=e^{-t/2}')
+
+%%
+% Ahora calcularemos los $Dn$ para $0>n>4$
+syms t n A
+vec = [a b]; 
+trap = [f];
+trap = sym(trap);
+T = max(vec)-min(vec);
+w0 = 2*pi/(T);
+
+Do=0;
+for i=1:length(trap);
+    Do= Do+int(trap(i),'t', vec(i),vec(i+1));
+end
+Do=simplify(Do/T);
+fprintf('D0 = %f\n',Do)
+
+D1=0;
+for i=1:length(g);
+    D1 = Do+int(g(i)*exp(-1*j*w0*t), vec(i), vec(i+1));
+end
+D1 = simplify (D1/T);
+Y1 = abs(D1);
+fprintf('D1 = %f\n',Y1)
+
+D2=0;
+for i=1:length(g);
+    D2 = int(g(i)*exp(-2*j*w0*t), vec(i), vec(i+1));
+end
+D2 = simplify (D2/T);
+Y2 = abs(D2);
+fprintf('D2 = %f\n',Y2)
+
+D3=0;
+for i=1:length(g);
+    D3 = int(g(i)*exp(-3*j*w0*t), vec(i), vec(i+1));
+end
+D3 = simplify (D3/T);
+Y3 = abs(D3);
+fprintf('D3 = %f\n',Y3)
+
+D4=0;
+for i=1:length(g);
+    D4 = int(g(i)*exp(-4*j*w0*t), vec(i), vec(i+1));
+end
+D4 = simplify (D4/T);
+Y4 = abs(D4);
+fprintf('D4 = %f\n',Y4)
+%%
+% Ahora los resultados para el código de Lathi
+T_0 = pi; N_0 = 10; T = T_0/N_0; t = (0:T:T*(N_0 - 1))'; M = 4.5;
+x = exp(-t/2); x(1) = (exp(-pi/2))/2;
+D_n = fft (x)/N_0; n = [-N_0/2:N_0/2-1]';
+%Y = abs(D_n);
+clf; subplot(1,1,1); stem(n,abs(fftshift (D_n)),'m');
+p = fftshift (D_n);
+abs(p)
+axis([-M M -.1 .6]); xlabel('n'); ylabel('|D_n|');
+%%
+% LA siguiente tabla muestra los valores de $Dn$ para ambos casos, así como
+% los valores exactos, los valores de diferenciación y el Dn más aproximado
+% a los valores exactos para cada punto,
+%
+% <<Tabla.png>> 
+%
+%% Referencias.
+% * B.P. Lathi. (2005). chapter 6.6. _Linear Systems and Signals_. E.U.A: Oxford University Press.
+% * Ingeniería Técnica Industrial. _Tema 7.- Series de Fourier_, de - Sitio web: http://personal.us.es/niejimjim/tema07.pdf
+% * sprigan2001. (2011). _MUESTREO EN MATLAB_. de - Sitio web: https://www.youtube.com/watch?v=zNAaDCEMHBA
+% * Jorge Zambrano Ibujés. (2012). _Calculo de los coeficientes de la serie de fourier en matlab_. de - Sitio web: https://www.youtube.com/watch?v=dACnin4QS1M
+% * Universidad Estatal a Distancia de Costa Rica (UNED). Regla del
+% trapecio. _Aproximación de integrales_. de - Sitio web: http://repositorio.uned.ac.cr/multimedias/metodos_numericos_ensenanza/modulo4/descripcion.html
+##### SOURCE END #####
+--></body></html>
